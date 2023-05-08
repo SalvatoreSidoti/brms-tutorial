@@ -64,6 +64,8 @@ france1_mbrms <- brm(pop ~ I(year - 1975),
                      iter = 3000,
                      warmup = 1000)
 
+summary(france1_mbrms)
+
 # Save the model as an RDS (R Data Structure)
 saveRDS(france1_mbrms,
         file = "france1_mbrms.RDS")
@@ -139,13 +141,15 @@ france3_mbrms <- brm(pop ~ I(year - 1975) + (1|year),
                      data = France,
                      family = poisson(),
                      chains = 3,
-                     iter = 6000, # doubled the number of iterations from prevous model
+                     iter = 6000, # doubled the number of iterations from previous model
                      warmup = 1000,
                      control = list(max_treedepth = 15)) # max_treedepth = 10 is STAN default
 
 summary(france3_mbrms)
 
 plot(france3_mbrms)
+
+pp_check(france3_mbrms)
 
 # No errors, but the chains look a bit too serpentine
 # Additional tweaking of the model is needed
@@ -156,6 +160,23 @@ plot(france3_mbrms)
 # Save model
 save(france3_mbrms,
      file = "france3_mbrms.Rdata")
+
+france4_mbrms <- brm(pop ~ I(year - 1975) + (1|year),
+                     data = France,
+                     family = poisson(),
+                     chains = 3,
+                     iter = 6000, # doubled the number of iterations from previous model
+                     warmup = 1000,
+                     thin = 10,
+                     control = list(max_treedepth = 15)) # max_treedepth = 10 is STAN default
+
+plot(france4_mbrms)
+
+pp_check(france4_mbrms)
+
+# Save model
+save(france4_mbrms,
+     file = "france4_mbrms.Rdata")
 
 #===============================================================================
 # Adding multiple fixed effects
@@ -171,20 +192,25 @@ unique(France$Location.of.population)
     theme(axis.text = element_text(size = 12),
           axis.title = element_text(size = 14, face = "plain")))
 
-france4_mbrms <- brm(pop ~ I(year - 1975) + Location.of.population,
+france5_mbrms <- brm(pop ~ I(year - 1975) + Location.of.population,
                      data = France,
                      family = poisson(),
                      chains = 3,
                      iter = 3000,
                      warmup = 1000)
 
-summary(france4_mbrms)
+plot(france5_mbrms)
 
-plot(france4_mbrms)
+pp_check(france5_mbrms)
+
+# Save model
+save(france5_mbrms,
+     file = "france5_mbrms.Rdata")
 
 # Save all models under one file
 save(france1_mbrms,
      france2_mbrms,
      france3_mbrms,
      france4_mbrms,
+     france5_mbrms,
      file = "france_brms_models.Rdata")
