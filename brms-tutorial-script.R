@@ -4,7 +4,6 @@
 # Centers for Disease Control and Prevention (CDC)
 # Division of Foodborne, Waterborne, and Environmental Diseases
 # Surveillance, Information Management, and Statistics Office 
-# urz2@cdc.gov | 614-558-0049
 #===============================================================================
 
 #~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
